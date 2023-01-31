@@ -43,6 +43,20 @@ jobs:
         inlineScript: |
           dir env:
         azPSVersion: '3.1.0'
+    
+    # Publish Artifact: Databricks-Jars
+    - name: 'Publish Artifact: Databricks-Jars'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'jars'
+        path: '${{ github.workspace }}/jars'          
+
+    # Publish Artifact: Databricks-Init-Scripts
+    - name: 'Publish Artifact: Databricks-Init-Scripts'
+      uses: actions/upload-artifact@v3
+      with:
+        name: 'init-scripts'
+        path: '${{ github.workspace }}/init-scripts'
 
     # Publish Artifact: Databricks-Notebooks
     - name: 'Publish Artifact: Databricks-Notebooks' 
@@ -85,6 +99,20 @@ jobs:
         inlineScript: |
           dir env:
         azPSVersion: '3.1.0'        
+    
+    # Download Artifact: Databricks-Init-Scripts
+    - name: 'Download Artifact: Databricks-Init-Scripts'
+      uses: actions/download-artifact@v3
+      with:
+        name: 'init-scripts'
+        path: ${{ github.workspace }}/init-scripts
+
+    # Download Artifact: jar
+    - name: 'Download Artifact: Databricks-Jar'
+      uses: actions/download-artifact@v3
+      with:
+        name: 'jars'
+        path: ${{ github.workspace }}/jars  
 
     # Download Artifact: Databricks-Notebooks
     - name: 'Download Artifact: Databricks-Notebooks' 
@@ -106,6 +134,20 @@ jobs:
       with:
         name: 'deployment-scripts'
         path: ${{ github.workspace }}/deployment-scripts
+    
+    # Deploy your Databricks Init Scripts to dbfs:/FileStore/init-scripts folder on DBFS
+    - name:  Deploy your Databricks Init Scripts to dbfa:/init-scripts folder on DBFS
+      run: |
+        cd "$GITHUB_WORKSPACE/init-scripts"
+        chmod +x $GITHUB_WORKSPACE/deployment-scripts/deploy-init-scripts.sh
+        $GITHUB_WORKSPACE/deployment-scripts/deploy-init-scripts.sh ${{ env.DATABRICKS_TOKEN }} ${{ env.DATABRICKS_HOST }}
+
+    # Deploy your Databricks Jar to dbfs:/FileStore/jars folder on DBFS
+    - name:  Deploy your Databricks Jar Files to dbfs:/FileStore/jars folder on DBFS
+      run: |
+        cd "$GITHUB_WORKSPACE/jars"
+        chmod +x $GITHUB_WORKSPACE/deployment-scripts/deploy-jars.sh
+        $GITHUB_WORKSPACE/deployment-scripts/deploy-jars.sh ${{ env.DATABRICKS_TOKEN }} ${{ env.DATABRICKS_HOST }}
 
     # Deploy Databricks Notebooks
     - name: Deploy Databricks Notebooks
@@ -141,6 +183,20 @@ jobs:
         inlineScript: |
           dir env:
         azPSVersion: '3.1.0'        
+    
+    # Download Artifact: Databricks-Init-Scripts
+    - name: 'Download Artifact: Databricks-Init-Scripts'
+      uses: actions/download-artifact@v3
+      with:
+        name: 'init-scripts'
+        path: ${{ github.workspace }}/init-scripts
+
+    # Download Artifact: jar
+    - name: 'Download Artifact: Databricks-Jar'
+      uses: actions/download-artifact@v3
+      with:
+        name: 'jars'
+        path: ${{ github.workspace }}/jars  
 
     # Download Artifact: Databricks-Notebooks
     - name: 'Download Artifact: Databricks-Notebooks' 
@@ -162,6 +218,20 @@ jobs:
       with:
         name: 'deployment-scripts'
         path: ${{ github.workspace }}/deployment-scripts
+
+    # Deploy your Databricks Init Scripts to dbfs:/FileStore/init-scripts folder on DBFS
+    - name:  Deploy your Databricks Init Scripts to dbfa:/init-scripts folder on DBFS
+      run: |
+        cd "$GITHUB_WORKSPACE/init-scripts"
+        chmod +x $GITHUB_WORKSPACE/deployment-scripts/deploy-init-scripts.sh
+        $GITHUB_WORKSPACE/deployment-scripts/deploy-init-scripts.sh ${{ env.DATABRICKS_TOKEN }} ${{ env.DATABRICKS_HOST }}
+
+    # Deploy your Databricks Jar to dbfs:/FileStore/jars folder on DBFS
+    - name:  Deploy your Databricks Jar Files to dbfs:/FileStore/jars folder on DBFS
+      run: |
+        cd "$GITHUB_WORKSPACE/jars"
+        chmod +x $GITHUB_WORKSPACE/deployment-scripts/deploy-jars.sh
+        $GITHUB_WORKSPACE/deployment-scripts/deploy-jars.sh ${{ env.DATABRICKS_TOKEN }} ${{ env.DATABRICKS_HOST }}
 
     # Deploy Databricks Notebooks
     - name: Deploy Databricks Notebooks
