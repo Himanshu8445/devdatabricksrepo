@@ -2,9 +2,9 @@
 %sh
 echo "Init-Script Started"
 
-rm -rf /databricks/jars/123.jar
-rm -rf /databricks/jars/abc.jar
-cp /dbfs/FileStore/jars/*.jar /databricks/jars/
+# rm -rf /databricks/jars/123.jar
+# rm -rf /databricks/jars/abc.jar
+# cp /dbfs/FileStore/jars/*.jar /databricks/jars/
 
 echo "library installed"
 
