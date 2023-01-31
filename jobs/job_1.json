@@ -13,7 +13,7 @@
                     "notebook_path": "/test_1",
                     "source": "WORKSPACE"
                 },
-                "job_cluster_key": "test",
+                "existing_cluster_id_ClusterName": "test",
                 "timeout_seconds": 0,
                 "email_notifications": {
                     "on_start": [
